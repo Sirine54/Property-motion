@@ -24,6 +24,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use(express.json());
 app.use(cookieParser());
