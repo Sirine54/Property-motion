@@ -41,6 +41,7 @@ model Property {
   floors         Int?
   features       String?
   ownerId        String
+  propertyOn     String?
   owner          User     @relation(fields: [ownerId], references: [id])
   createdAt      DateTime @default(now())
 }

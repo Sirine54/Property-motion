@@ -1,7 +1,5 @@
 import prisma from "../lib/prisma.js";
 import { nanoid } from "nanoid";
-import fs from "fs";
-import path from "path";
 
 
 export async function createProperty(req, res) {
@@ -21,6 +19,7 @@ export async function createProperty(req, res) {
       bathrooms,
       floors,
       features,
+      propertyOn,
     } = req.body;
 
     if (!name) return res.status(400).json({ error: "Property name required" });
@@ -56,7 +55,9 @@ export async function createProperty(req, res) {
           ? features
           : JSON.stringify(features)
         : null,
+       propertyOn:propertyOn || null, 
       ownerId,
+
     };
 
     const property = await prisma.property.create({
@@ -80,6 +81,7 @@ export async function createProperty(req, res) {
         floors: true,
         features: true,
         ownerId: true,
+        propertyOn:true,
         createdAt: true,
       },
     });
@@ -120,6 +122,7 @@ export async function listProperties(req, res) {
           bathrooms: true,
           floors: true,
           features: true,
+          propertyOn:true,
           ownerId: true,
           createdAt: true,
         },

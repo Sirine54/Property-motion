@@ -10,7 +10,8 @@
     "prisma:format": "npx prisma format",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset --force",
-    "prisma:push": "npx prisma db push"
+    "prisma:push": "npx prisma db push",
+    "prisma:studio" :"npx prisma studio"
   },
   "keywords": [],
   "author": "",
