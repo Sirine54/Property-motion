@@ -12,7 +12,7 @@ const LOCAL_FALLBACK_IMAGE = '/mnt/data/e1c32dcf-c429-4a65-bc26-19062706517b.png
 
 const PropertyPage: React.FC = () => {
   const [active, setActive] = useState<'Cards' | 'List'>('Cards');
-  const { data: propertiesResponse, isLoading, isError } = useProperties();
+  const { data: propertiesResponse, isPending, isError } = useProperties();
   const properties = propertiesResponse?.items ?? [];
   const [showCreate, setShowCreate] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState<any | null>(null);
@@ -113,7 +113,7 @@ console.log('properties',properties);
             <PropertyDetailPage property={selectedProperty}  />
         ) : (
           <>
-            {isLoading ? (
+            {isPending ? (
               <div className="py-8 text-center">Loading properties…</div>
             ) : isError ? (
               <div className="py-8 text-center text-red-500">Failed to load properties.</div>
