@@ -17,6 +17,7 @@ export function buildPropertyFormData(payload: CreatePropertyInput) {
     'propertyType',
     'accessProperty',
     'dimensions',
+    'propertyOn',
   ] as const;
 
   simpleFields.forEach((field) => {

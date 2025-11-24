@@ -46,7 +46,6 @@ export default function CreateProperty({ onCancel, onSaved }: Props) {
    });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
- const openFileDialog = () => fileInputRef.current?.click();
 
  const handleFileSelect = (file: File | null) => {
    if (preview && preview.startsWith('blob:')) {
@@ -80,37 +79,38 @@ export default function CreateProperty({ onCancel, onSaved }: Props) {
     };
 
 
- const handleSubmit = async (e: React.FormEvent) => {
-   e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-   if (!validate()) return;
+  if (!validate()) return;
 
-   try {
-     await createProperty.mutateAsync({
-       name: formData.name,
-       address: formData.address,
-       city: formData.city,
-       country: formData.country || undefined,
-       postCode: formData.postCode || undefined,
-       reference: formData.reference || undefined,
-       propertyValue: formData.propertyValue,
-       propertyType: formData.propertyType,
-       accessProperty: formData.accessProperty,
-       dimensions: formData.dimensions || undefined,
-       bedrooms: formData.bedrooms || undefined,
-       bathrooms: formData.bathrooms || undefined,
-       floors: formData.floors || undefined,
-       features: features,
-       imageFile: imageFile || undefined,
-     });
+  try {
+    await createProperty.mutateAsync({
+      name: formData.name,
+      address: formData.address,
+      city: formData.city,
+      country: formData.country || undefined,
+      postCode: formData.postCode || undefined,
+      reference: formData.reference || undefined,
+      propertyValue: formData.propertyValue,
+      propertyType: formData.propertyType,
+      accessProperty: formData.accessProperty,
+      dimensions: formData.dimensions || undefined,
+      bedrooms: formData.bedrooms || undefined,
+      bathrooms: formData.bathrooms || undefined,
+      floors: formData.floors || undefined,
+      features: features,
+      imageFile: imageFile || undefined,
+      propertyOn: isSale ? 'sale' : 'let', 
+    });
 
-     toast.success('Property created successfully!');
-     onSaved?.();
-   } catch (error) {
-     toast.error('Failed to create property');
-     console.error(error);
-   }
- };
+    toast.success('Property created successfully!');
+    onSaved?.();
+  } catch (error) {
+    toast.error('Failed to create property');
+    console.error(error);
+  }
+};
 
  const updateField = (field: keyof typeof formData, value: any) => {
    setFormData((prev) => ({ ...prev, [field]: value }));

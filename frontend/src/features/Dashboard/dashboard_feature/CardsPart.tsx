@@ -1,12 +1,21 @@
-import { useCompletedBookings, useInProgressBookings, usePendingBookings, type Booking } from '@/hooks/useBookings';
+import { useBookings, useCompletedBookings, useInProgressBookings, usePendingBookings, type Booking } from '@/hooks/useBookings';
 import CustomCard from './CustomCard';
 import { SquareArrowOutUpRight } from 'lucide-react';
+import BookingsTable from './BookingTable';
+import { useState } from 'react';
 
-const CardsPart = ({ selectedMonth }: { selectedMonth?: string | null }) => {
+const CardsPart = () => {
+const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
+
 const { data: pendingData, isLoading: loadingPending } = usePendingBookings(selectedMonth);
 const { data: inProgressData, isLoading: loadingInProgress } = useInProgressBookings(selectedMonth);
 const { data: completedData, isLoading: loadingCompleted } = useCompletedBookings(selectedMonth);
+const { data: bookingsData, isLoading } = useBookings(selectedMonth);
 
+const handleMonthChange = (month: string) => {
+  console.log('Month changed to:', month);
+  setSelectedMonth(month);
+};
 const pendingBookings = pendingData?.items || [];
 const inProgressBookings = inProgressData?.items || [];
 const completedBookings = completedData?.items || [];
@@ -14,7 +23,7 @@ const completedBookings = completedData?.items || [];
     <li className="flex items-center justify-between border-b-2 pb-2.5">
       <div className="flex items-center space-x-3">
         <div className="w-8 h-8 rounded-full bg-gray-200" />
-        <div className="flex flex-col items-start justify-end">
+        <div className="flex flex-col items-start justify-end text-left">
           <div className="text-sm font-medium">{booking.service?.name || 'Service'}</div>
           <div className="text-xs text-gray-500">{booking.details || 'No details'}</div>
         </div>
@@ -49,7 +58,15 @@ const completedBookings = completedData?.items || [];
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+      <BookingsTable
+        bookings={bookingsData?.items || []}
+        loading={isLoading}
+        onViewDetails={(booking) => console.log('View:', booking)}
+        onAddBooking={() => console.log('Add booking')}
+        onMonthChange={handleMonthChange}
+        selectedMonth={selectedMonth || 'november'}
+      />
+      <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 w-full">
         <CustomCard title="Pending" className="h-full">
           {loadingPending ? (
             <div className="text-center text-gray-500 py-4">Loading...</div>

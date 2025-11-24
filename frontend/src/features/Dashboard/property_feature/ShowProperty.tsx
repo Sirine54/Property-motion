@@ -1,6 +1,5 @@
 import { Donut } from '../dashboard_feature/CustomCard';
 import { EllipsisVertical } from 'lucide-react';
-import { getFullImageUrl } from './PropertyCard';
 
 const UPLOADED_FALLBACK = '/mnt/data/e1c32dcf-c429-4a65-bc26-19062706517b.png'; 
 
@@ -8,7 +7,7 @@ type Property = {
   id: string;
   name: string;
   address?: string;
-  ref?: string | number;
+  reference?: string | number;
   propertyType?: string;
   propertyValue?: number | null;
   propertyOn?: string;
@@ -27,7 +26,7 @@ const sampleProperty: Property = {
   id: '9f07cba5-4f6b-4bfb-98fc-c05a630447b9',
   name: 'Test',
   address: '19 College Parade Salusbury Road, London, UK',
-  ref: 12,
+  reference: 12,
   propertyType: 'Penthouse',
   propertyValue: 800,
   propertyOn: 'Let',
@@ -52,7 +51,7 @@ export default function PropertyDetailPage({ property = sampleProperty }: Props)
   const {
     name,
     address,
-    ref,
+    reference,
     propertyType,
     propertyValue,
     propertyOn,
@@ -66,20 +65,16 @@ export default function PropertyDetailPage({ property = sampleProperty }: Props)
     marketingPercent = 20,
     compliancePercent = 20,
   } = property;
+ console.log('image', restOf);
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 md:p-6 bg-white relative">
-     
-
+    <div className="w-full  mx-auto p-4 md:p-6 bg-white relative">
       <div className="flex flex-col md:flex-row gap-6 ">
         {/* Left - Image */}
         <div className="w-full md:w-[280px] flex-shrink-0">
           <div className="relative w-full h-[200px] md:h-[220px] rounded-2xl overflow-hidden shadow-md">
             <img
-              src={
-                imageUrl ||
-                'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070&auto=format&fit=crop'
-              }
+              src={`http://localhost:4000/${imageUrl}`}
               alt={name}
               className="w-full h-full object-cover"
               onError={(e) => {
@@ -93,10 +88,10 @@ export default function PropertyDetailPage({ property = sampleProperty }: Props)
         {/* Right - Property Header and Basic Info */}
         <div className="flex-1">
           <div className="flex items-start justify-between mb-4">
-            <div className='text-left'>
-              <h1 className="text-2xl font-bold text-slate-900 mb-2">{name}</h1>
+            <div className="text-left">
+              <h4 className="text-2xl font-bold text-slate-900 mb-2">{name}</h4>
               <p className="text-sm text-slate-600 mb-1">{address}</p>
-              <p className="text-sm text-slate-500">Ref: {ref}</p>
+              <p className="text-sm text-slate-500">Ref: {reference}</p>
             </div>
             <button className="p-2 rounded-full hover:bg-slate-100 transition-colors">
               <EllipsisVertical size={20} className="text-slate-600" />

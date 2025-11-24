@@ -19,25 +19,26 @@ export type Property = {
   floors?: number | null;
   features?: any;
   ownerId?: string | null;
+  propertyOn?:string;
   createdAt?: string | null;
 };
 
-export type CreatePropertyInput = {
+export interface CreatePropertyInput {
   name: string;
-  address?: string;
-  city?: string;
+  address: string;
+  city: string;
   country?: string;
   postCode?: string;
   reference?: string;
-  propertyValue?: number | string;
+  propertyValue?: string | number;
   propertyType?: string;
   accessProperty?: string;
   dimensions?: string;
-  bedrooms?: number | string;
-  bathrooms?: number | string;
-  floors?: number | string;
-  features?: Record<string, any> | string | null;
-  imageFile?: File | null;
-  ownerId?: string | null; 
-};
-
+  bedrooms?: number;
+  bathrooms?: number;
+  floors?: number;
+  features?: Record<string, boolean> | string;
+  imageFile?: File;
+  ownerId?: string;
+  propertyOn?: 'sale' | 'let';
+}

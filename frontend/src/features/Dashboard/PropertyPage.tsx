@@ -27,20 +27,41 @@ const PropertyPage: React.FC = () => {
       </div>
     );
   }
-console.log('properties',properties);
-  const cards = properties.map((p) => ({
-    id: p.id,
-    img: p.imageUrl ? p.imageUrl : LOCAL_FALLBACK_IMAGE,
-    name: p.name,
-    address: { address: p.address ?? '' },
-    nbRooms: p.bedrooms ?? 0,
-    nbBath: p.bathrooms ?? 0,
-    surface: p.dimensions ? Number(p.dimensions) : undefined,
-    perCompliance: 0,
-    perMarketing: 0,
-    propertyValueFormatted: p.propertyValue,
-    raw: p,
-  }));
+console.log('properties',properties[0]);
+ const cards = properties.map((p) => {
+   let parsedFeatures = { parking: false, garden: false, garage: false };
+   if (p.features) {
+     try {
+       parsedFeatures = typeof p.features === 'string' ? JSON.parse(p.features) : p.features;
+     } catch (e) {
+       console.error('Failed to parse features:', e);
+     }
+   }
+
+   return {
+     id: p.id,
+     img: p.imageUrl ? `http://localhost:4000${p.imageUrl}` : LOCAL_FALLBACK_IMAGE,
+     name: p.name,
+     address: { address: p.address ?? '' },
+     nbRooms: p.bedrooms ?? 0,
+     nbBath: p.bathrooms ?? 0,
+     surface: p.dimensions ? Number(p.dimensions) : undefined,
+     perCompliance: 0,
+     perMarketing: 0,
+     propertyValueFormatted: p.propertyValue,
+     reference: p.reference,
+     restOf: parsedFeatures,
+     accessThrough: p.accessProperty,
+      propertyOn: p.propertyOn, // Removed because it does not exist on type 'Property'
+     propertyType: p.propertyType,
+     propertyValue: p.propertyValue,
+     bedrooms: p.bedrooms,
+     bathrooms: p.bathrooms,
+     floors: p.floors,
+     dimensions: p.dimensions,
+     raw: p,
+   };
+ });
 
   const tableData = properties.map((p) => ({
     id: p.id,
@@ -54,14 +75,49 @@ console.log('properties',properties);
     img: p.imageUrl ?? LOCAL_FALLBACK_IMAGE,
     createdAt: p.createdAt,
     propertyValue: p.propertyValue,
+    reference: p.reference,
+    accessThrough: p.accessProperty,
     raw: p,
   }));
 
-  const handleCardClick = (card: any) => {
-    const raw = card.raw ?? card;
-    if (!raw.imageUrl) raw.imageUrl = LOCAL_FALLBACK_IMAGE;
-    setSelectedProperty(raw);
+const handleCardClick = (card: any) => {
+  const raw = card.raw ?? card;
+
+  // Parse features from raw data
+  let parsedFeatures = { parking: false, garden: false, garage: false };
+  if (raw.features) {
+    try {
+      parsedFeatures = typeof raw.features === 'string' ? JSON.parse(raw.features) : raw.features;
+    } catch (e) {
+      console.error('Failed to parse features:', e);
+    }
+  }
+  const featuresList =
+    Object.entries(parsedFeatures)
+      .filter(([_, value]) => value)
+      .map(([key]) => key.charAt(0).toUpperCase() + key.slice(1))
+      .join(', ') || '-';
+
+  const propertyData = {
+    id: raw.id,
+    name: raw.name,
+    address: raw.address,
+    reference: raw.reference,
+    propertyType: raw.propertyType,
+    propertyValue: raw.propertyValue,
+    propertyOn: raw.propertyOn,
+    bedrooms: raw.bedrooms,
+    bathrooms: raw.bathrooms,
+    floors: raw.floors,
+    dimensions: raw.dimensions,
+    restOf: featuresList, 
+    accessThrough: raw.accessProperty,
+    imageUrl: raw.imageUrl || LOCAL_FALLBACK_IMAGE,
+    marketingPercent: 20,
+    compliancePercent: 20,
   };
+  setSelectedProperty(propertyData);
+};
 
   const handleCloseDetail = () => {
     setSelectedProperty(null);
@@ -86,7 +142,7 @@ console.log('properties',properties);
         </div>
       </div>
 
-      <div className="flex flex-col w-full shadow-md rounded-[6px] gap-2.5 justify-between bg-white px-7 py-5 mt-3.5">
+      <div className="flex flex-col w-full shadow-md rounded-[6px] gap-2.5 justify-between bg-white px-7 py-5 mt-3.5 max-h-[70vh] overflow-x-hidden overflow-y-scroll custom-scrollbar">
         <div className="flex flex-row justify-between items-center">
           <h5 className="font-bold">Properties listing</h5>
          {!selectedProperty ? <ToggleButtons
