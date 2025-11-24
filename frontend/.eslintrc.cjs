@@ -11,6 +11,7 @@ module.exports = {
     'plugin:@tanstack/eslint-plugin-query/recommended',
     'plugin:prettier/recommended',
   ],
+  files: ['**/*.{ts,tsx}'],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', '@tanstack/query', '@typescript-eslint', 'prettier'],
