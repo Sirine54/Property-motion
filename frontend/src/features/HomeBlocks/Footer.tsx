@@ -8,7 +8,8 @@ const Footer = () => {
                 flex flex-col md:flex-row
                 items-center justify-between
                 px-[clamp(1rem,7vw,7rem)]
-                py-[clamp(1rem,2.5vw,2.5rem)]"
+                py-[clamp(1rem,2.5vw,2.5rem)]
+                "
     >
       <div className="text-[clamp(1rem,2vw,32px)] flex font-bold  flex-col whitespace-nowrap justify-start items-start  ">
         <span className=" flex-wrap"> Trusted by more than 500 property </span>
