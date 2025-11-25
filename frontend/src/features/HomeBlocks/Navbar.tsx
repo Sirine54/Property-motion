@@ -179,6 +179,7 @@ export function Navbar() {
                   )}
                   onClick={(e) => {
                     e.preventDefault();
+                    navigate('/login');
                   }}
                 >
                   Sign in
@@ -196,6 +197,7 @@ export function Navbar() {
                   )}
                   onClick={(e) => {
                     e.preventDefault();
+                    navigate('/signup');
                   }}
                 >
                   Get started

@@ -112,7 +112,12 @@ const SignUpPage = () => {
         className="max-w-[1100px] w-full bg-white rounded-lg overflow-hidden grid"
         style={{ minHeight: 720 }}
       >
-        <div className="px-[clamp(1rem,4vw,3rem)] py-[clamp(1.2rem,3vw,3rem)] flex flex-col justify-center">
+        <div
+          className="px-[clamp(1rem,4vw,3rem)] py-[clamp(1.2rem,3vw,3rem)] flex flex-col justify-center
+        
+        "
+          // animate__animated animate__pulse
+        >
           <div className="max-w-[420px] w-full mx-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* Business Name */}

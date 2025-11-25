@@ -47,12 +47,22 @@ const LoginPage = () => {
      }
 
   return (
-    <div className="min-h-screen bg-[#FFF] flex items-start justify-center px-4">
+    <div
+      className="min-h-screen bg-[#FFF] flex items-start justify-center px-4
+    "
+    >
       <div
         className="max-w-[1100px] w-full bg-white rounded-lg overflow-hidden grid"
         style={{ minHeight: 720 }}
       >
-        <div className="px-[clamp(1rem,4vw,3rem)] py-[clamp(1.2rem,3vw,3rem)] flex flex-col justify-center">
+        <div
+          className="px-[clamp(1rem,4vw,3rem)] py-[clamp(1.2rem,3vw,3rem)] flex flex-col justify-center
+    
+        
+        "
+          // animate__animated
+          // animate__flipInY
+        >
           <div className="max-w-[420px] w-full mx-auto">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="flex flex-col justify-start items-start">

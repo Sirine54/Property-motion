@@ -78,7 +78,9 @@ const AuthenticationLayout = (props: AuthenticationLayoutProps) => {
       <div
         className="bg-[#ECF1F4] h-full w-full md:w-[45%] rounded-tr-[120px]  
         px-[clamp(1rem,7vw,7rem)]
-        py-[clamp(4.5rem,2.5vw,4.5rem)]"
+        py-[clamp(4.5rem,2.5vw,4.5rem)]
+        animate__animated animate__bounceInLeft
+        "
       >
         {/* part 1 */}
         <div
